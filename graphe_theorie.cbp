@@ -38,9 +38,12 @@
 			<Add library="SDL2main" />
 			<Add library="SDL2.dll" />
 		</Linker>
+		<Unit filename="bulle.h" />
+		<Unit filename="cube.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="text.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
