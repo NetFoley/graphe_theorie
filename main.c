@@ -1,12 +1,14 @@
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 #include <stdio.h>
 #include <math.h>
+#include "bulle.h"
 
 int main(int argc, char *argv[])
 {
-    SDL_Window *window;
-    SDL_Renderer *renderer;
+    SDL_Window *windowGraph;
+    SDL_Renderer *renderGraph;
     SDL_Surface *surface;
     SDL_Texture *texture;
     SDL_Event event;
@@ -17,7 +19,7 @@ int main(int argc, char *argv[])
         return 3;
     }
 
-    if (SDL_CreateWindowAndRenderer(880, 750, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
+    if (SDL_CreateWindowAndRenderer(880, 750, SDL_WINDOW_RESIZABLE, &windowGraph, &renderGraph)) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window and renderer: %s", SDL_GetError());
         return 3;
     }
@@ -27,19 +29,28 @@ int main(int argc, char *argv[])
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface from image: %s", SDL_GetError());
         return 3;
     }
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    texture = SDL_CreateTextureFromSurface(renderGraph, surface);
     if (!texture) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture from surface: %s", SDL_GetError());
         return 3;
     }
     SDL_FreeSurface(surface);
 
+    if(TTF_Init() == -1)
+    {
+        fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+    bulle bulles;
+    INIT_bulle(&bulles, 50, 50, 30, 50, renderGraph);
+
     while (1) {
-        SDL_bool FC = SDL_FALSE;
         /*********************
             GET INPUTS
         *********************/
         SDL_PollEvent(&event);
+
         if (event.type == SDL_QUIT) {
             break;
         }
@@ -48,7 +59,7 @@ int main(int argc, char *argv[])
         }
         else if(event.key.keysym.scancode == SDL_SCANCODE_F11)
         {
-            SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+            SDL_SetWindowFullscreen(windowGraph, SDL_WINDOW_FULLSCREEN_DESKTOP);
         }
 
         /*********************
@@ -61,13 +72,16 @@ int main(int argc, char *argv[])
 
         }
 
-        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderGraph, 255, 255, 255, 0);
+        SDL_RenderClear(renderGraph);
 
+        RENDER_bulle(renderGraph, windowGraph, &bulles);
 
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent(renderGraph);
     }
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderGraph);
+    SDL_DestroyWindow(windowGraph);
 
     SDL_Quit();
 
