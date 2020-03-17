@@ -5,7 +5,7 @@
 	<stdio.h>
 	<math.h>
 
-1583838306 source:d:\netfo\documents\ludus\c\graph_theorie\main.c
+1584205228 source:d:\netfo\documents\ludus\c\graph_theorie\main.c
 	"SDL.h"
 	"SDL_image.h"
 	"SDL_ttf.h"
@@ -13,13 +13,13 @@
 	<math.h>
 	"bulle.h"
 
-1583838256 d:\netfo\documents\ludus\c\graph_theorie\text.h
+1584205228 d:\netfo\documents\ludus\c\graph_theorie\text.h
 
-1583837935 d:\netfo\documents\ludus\c\graph_theorie\cube.h
+1584205228 d:\netfo\documents\ludus\c\graph_theorie\cube.h
 	<time.h>
 	<math.h>
 
-1583838677 d:\netfo\documents\ludus\c\graph_theorie\bulle.h
+1584205228 d:\netfo\documents\ludus\c\graph_theorie\bulle.h
 	"text.h"
 	"cube.h"
 
