@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1581345465 source:d:\netfo\documents\ludus\c\graphes_theorie\main.c
-	"SDL.h"
-	"SDL_image.h"
-	<stdio.h>
-	<math.h>
-
