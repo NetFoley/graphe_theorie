@@ -9,8 +9,6 @@ int main(int argc, char *argv[])
 {
     SDL_Window *windowGraph;
     SDL_Renderer *renderGraph;
-    SDL_Surface *surface;
-    SDL_Texture *texture;
     SDL_Event event;
 
 
@@ -24,17 +22,6 @@ int main(int argc, char *argv[])
         return 3;
     }
 
-    surface = IMG_Load("totue.png");
-    if (!surface) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create surface from image: %s", SDL_GetError());
-        return 3;
-    }
-    texture = SDL_CreateTextureFromSurface(renderGraph, surface);
-    if (!texture) {
-        SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create texture from surface: %s", SDL_GetError());
-        return 3;
-    }
-    SDL_FreeSurface(surface);
 
     if(TTF_Init() == -1)
     {
@@ -42,8 +29,11 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    bulle bulles;
-    INIT_bulle(&bulles, 50, 50, 30, 50, renderGraph);
+    graphe * graphe;
+    INIT_graphe(graphe, renderGraph);
+    ADD_bulle(graphe, 50, 50, 30, 50);
+    ADD_bulle(graphe, 175, 50, 30, 50);
+    ADD_bulle(graphe, 300, 50, 30, 50);
 
     while (1) {
         /*********************
@@ -75,11 +65,9 @@ int main(int argc, char *argv[])
         SDL_SetRenderDrawColor(renderGraph, 255, 255, 255, 0);
         SDL_RenderClear(renderGraph);
 
-        RENDER_bulle(renderGraph, windowGraph, &bulles);
-
+        RENDER_graphe(windowGraph, graphe);
         SDL_RenderPresent(renderGraph);
     }
-    SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderGraph);
     SDL_DestroyWindow(windowGraph);
 
